@@ -23,8 +23,10 @@ module.exports = {
     "eslint:recommended",
     "plugin:vue/vue3-recommended",
     "plugin:prettier/recommended",
+    "./eslintrc-auto-import.json",
   ],
   rules: {
     "prettier/prettier": "warn",
+    "no-unused-vars": "off",
   },
 };
