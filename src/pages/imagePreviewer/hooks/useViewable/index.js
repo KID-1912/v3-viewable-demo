@@ -1,4 +1,4 @@
-import { calculateInitialScale, calculateCenterPosition } from "./helper.js";
+import { calculateScale, calculateCenterPosition } from "./helper.js";
 
 const useViewable = (target, options) => {
   let {
@@ -20,26 +20,33 @@ const useViewable = (target, options) => {
     height.value = contentElement.clientHeight;
     originSize.width = width.value;
     originSize.height = height.value;
-    const getContentSize = () => ({
-      width: width.value,
-      height: height.value,
-    });
-    const getContainerSize = () => ({
-      width: containerElement.clientWidth,
-      height: containerElement.clientHeight,
-    });
-    scale.value = calculateInitialScale(
-      getContentSize(),
-      getContainerSize(),
-      initialSizePercentage
-    );
-    position.value = calculateCenterPosition(
-      getContentSize(),
-      getContainerSize()
-    );
+    const initialScale = calcScaleBySizePercentage(initialSizePercentage);
+    setScale(initialScale);
   };
 
-  watch(scale, (newValue, oldValue) => {
+  const calcScaleBySizePercentage = (percentage) => {
+    const containerSize = {
+      width: containerElement.clientWidth,
+      height: containerElement.clientHeight,
+    };
+    const scale = calculateScale(originSize, containerSize, percentage);
+    return scale;
+  };
+
+  const setScale = (value) => {
+    scale.value = value;
+    const contentSize = {
+      width: width.value,
+      height: height.value,
+    };
+    const containerSize = {
+      width: containerElement.clientWidth,
+      height: containerElement.clientHeight,
+    };
+    position.value = calculateCenterPosition(contentSize, containerSize);
+  };
+
+  watch(scale, (newValue) => {
     if (scale.value <= 0) return (scale.value = 0.01);
     if (scale.value >= 999) return (scale.value = 9.99);
     const oldWidth = width.value;
@@ -57,7 +64,6 @@ const useViewable = (target, options) => {
 
   const wheel = (event) => {
     const deltaY = event.deltaY;
-    console.log(deltaY);
     if (deltaY === 0) return;
     const diff = deltaY > 0 ? -scaleStep : scaleStep;
     const newScale = scale.value + diff;
@@ -87,6 +93,8 @@ const useViewable = (target, options) => {
         left: ${position.value.x}px;
         top: ${position.value.y}px;`
     ),
+    calcScaleBySizePercentage,
+    setScale,
   };
 };
 

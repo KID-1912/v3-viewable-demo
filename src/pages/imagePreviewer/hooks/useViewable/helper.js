@@ -1,9 +1,5 @@
 // 根据内容宽高、容器宽高、内容占容器比例，计算出初始缩放比
-export const calculateInitialScale = (
-  contentSize,
-  containerSize,
-  percentage
-) => {
+export const calculateScale = (contentSize, containerSize, percentage) => {
   const { width: contentWidth, height: contentHeight } = contentSize;
   const { width: containerWidth, height: containerHeight } = containerSize;
   const initialScale = Math.min(
