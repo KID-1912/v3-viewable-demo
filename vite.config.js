@@ -46,7 +46,7 @@ export default defineConfig(({ command, mode }) => {
           data: { build_time: new Date().toLocaleString() },
         },
       }),
-      visualizer({ open: true }),
+      // visualizer(),
     ],
     server: {
       host: true,

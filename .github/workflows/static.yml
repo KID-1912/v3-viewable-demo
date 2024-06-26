@@ -26,17 +26,19 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "16.18.1"
       - name: Install Dependencies
         run: npm install
       - name: Build
         run: npm run build
+      - name: List dist directory contents for debugging
+        run: ls -R ./
+        continue-on-error: true
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
