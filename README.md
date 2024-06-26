@@ -4,7 +4,7 @@
     v3-viewable 示例
 </h3>
 
-[在线示例 demo](https://kid-1912.github.io/v3-viewable/index.html)
+[在线示例 demo](https://kid-1912.github.io/v3-viewable-demo/)
 
 [v3-viewable](https://github.com/KID-1912/v3-viewable)
 
